@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tobias Viana Araújo</title>
+        <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+        <script src="scenes/Tela_Inicial.js"></script> 
+        <script src="scenes/Tela_Jogo.js"></script>
+        <style> body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; } </style>
+    </head>
+
+    <body>     
+         <div id="game"></div>
+         <script type="text/javascript">
+            const config = {
+    type: Phaser.AUTO,
+    scale: {
+        mode: Phaser.Scale.RESIZE,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
+    pixelArt: true,
+    // Ativando a física no jogo
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 270 },
+            debug: true
+        }
+    },
+
+    scene: [TelaInicial, TelaJogo]
+};
+// Carrega as configurações do Phaser 
+const game = new Phaser.Game(config);
+         </script>
+    </body>
+</html>
