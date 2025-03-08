@@ -4,6 +4,7 @@ class Tutorial extends Phaser.Scene {
     }
 
     preload() {
+        //Adicionando as imagens
         this.load.image('play', 'assets/play.png');
         this.load.image('tutorial', 'assets/tutorial.png');
     }

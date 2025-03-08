@@ -8,6 +8,7 @@ class TelaJogo extends Phaser.Scene {
     }
 
     preload() {
+        //Adicionando as imagens do jogo
         this.load.image('sertao', 'assets/bg.png');
         this.load.spritesheet('player', 'assets/run.png', { frameWidth: 32, frameHeight: 32 });
         this.load.spritesheet('jump', 'assets/jump.png', { frameWidth: 32, frameHeight: 32 });
@@ -17,9 +18,11 @@ class TelaJogo extends Phaser.Scene {
     }
 
     create() {
+        //Criando variáveis para largura e altura da tela
         let sertao = this.add.image(0, 0, 'sertao').setOrigin(0, 0);
         sertao.setDisplaySize(this.scale.width, this.scale.height);
 
+        // Adiciona evento para redimensionar corretamente quando a tela mudar
         this.scale.on('resize', (gameSize) => {
             sertao.setDisplaySize(gameSize.width, gameSize.height);
         });
@@ -31,6 +34,7 @@ class TelaJogo extends Phaser.Scene {
             { x: 160, y: 350 }, { x: 1500, y: 870 }, { x: 1250, y: 620 },
             { x: 1700, y: 370 }, { x: 1150, y: 380 }
         ];
+        // Adicionando as plataformas
         plataformasData.forEach(pos => {
             this.plataformas.create(pos.x, pos.y, 'plataforma');
         });
@@ -41,7 +45,8 @@ class TelaJogo extends Phaser.Scene {
             repeat: 16,
             setXY: { x: 90, y: 0, stepX: 135 }
         });
-
+        
+        // Adicionando física às estrelas
         this.stars.children.iterate((star) => {
             star.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
             star.setGravityY(300); // Ajustando a gravidade
@@ -61,6 +66,7 @@ class TelaJogo extends Phaser.Scene {
                 this.player.anims.play('andar', true);
             }
         });
+        // Adicionando colisão com as estrelas
         this.physics.add.collider(this.stars, this.plataformas);
         this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this);
 
@@ -77,12 +83,14 @@ class TelaJogo extends Phaser.Scene {
             repeat: -1
         });
 
+        // Adicionando animação de pulo
         this.anims.create({
             key: 'pulo',
             frames: this.anims.generateFrameNumbers('jump', { start: 0, end: 1 }),
             frameRate: 10
         });
 
+        // Adicionando animação de pulo duplo
         this.anims.create({
             key: 'double_jump',
             frames: this.anims.generateFrameNumbers('doubleJump', { start: 0, end: 6 }),
@@ -94,10 +102,14 @@ class TelaJogo extends Phaser.Scene {
     }
 
     update() {
+
+        // Verifica se o jogo acabou
         if (this.gameOver) return;
 
+        // Verifica se o jogador está no ar
         let noAr = !this.player.body.blocked.down;
 
+        // Verifica se o jogador está se movendo
         if (this.tecladoLeft.isDown) {
             this.player.setVelocityX(-180);
             if (!noAr) this.player.anims.play('andar', true);
@@ -118,16 +130,16 @@ class TelaJogo extends Phaser.Scene {
                 this.pulos += 1;
             }
         }
-
+        // Verifica se o jogador está no chão
         if (this.player.body.blocked.down && !this.tecladoLeft.isDown && !this.tecladoRight.isDown) {
             this.player.anims.play('andar', true);
         }
-
+        // Verifica se o jogador caiu
         if (this.score > 90) {
             this.scene.start('TelaFinal');
         }
     }
-
+    // Função para coletar estrelas
     collectStar(player, star) {
         star.disableBody(true, true);
         this.score += 10;
