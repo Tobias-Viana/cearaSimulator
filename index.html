@@ -7,6 +7,8 @@
         <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
         <script src="scenes/Tela_Inicial.js"></script> 
         <script src="scenes/Tela_Jogo.js"></script>
+        <script src="scenes/Tutorial.js"></script>
+        <script src="scenes/TelaFinal.js"></script>
         <style> body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; } </style>
     </head>
 
@@ -24,12 +26,12 @@
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 270 },
+            gravity: { y: 300 },
             debug: true
         }
     },
 
-    scene: [TelaInicial, TelaJogo]
+    scene: [TelaInicial,Tutorial, TelaJogo, TelaFinal]
 };
 // Carrega as configurações do Phaser 
 const game = new Phaser.Game(config);
