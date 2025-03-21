@@ -9,32 +9,48 @@
         <script src="scenes/Tela_Jogo.js"></script>
         <script src="scenes/Tutorial.js"></script>
         <script src="scenes/TelaFinal.js"></script>
-        <style> body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; } </style>
+        <style> 
+            body { 
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                height: 100vh; 
+                margin: 0; 
+            } 
+        </style>
     </head>
 
     <body>     
-         <div id="game"></div>
-         <script type="text/javascript">
-            const config = {
-    type: Phaser.AUTO,
-    scale: {
-        mode: Phaser.Scale.RESIZE,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-    },
-    pixelArt: true,
-    // Ativando a física no jogo
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 300 },
-            debug: false
-        }
-    },
+        <div id="game"></div>
 
-    scene: [TelaInicial,Tutorial, TelaJogo, TelaFinal]
-};
-// Carrega as configurações do Phaser 
-const game = new Phaser.Game(config);
-         </script>
+        <script type="text/javascript">
+            const config = {
+                type: Phaser.AUTO,
+                scale: {
+                    mode: Phaser.Scale.RESIZE,
+                    autoCenter: Phaser.Scale.CENTER_BOTH,
+                },
+                pixelArt: true,
+                physics: {
+                    default: 'arcade',
+                    arcade: {
+                        gravity: { y: 300 },
+                        debug: false
+                    }
+                },
+                scene: [TelaInicial, Tutorial, TelaJogo, TelaFinal]
+            };
+
+            const game = new Phaser.Game(config);
+
+            // Detecta mudanças na orientação
+            game.scale.on('resize', function () {
+                if (game.scale.orientation === Phaser.Scale.PORTRAIT) {
+                    console.log('Modo Retrato (Portrait)');
+                } else if (game.scale.orientation === Phaser.Scale.LANDSCAPE) {
+                    console.log('Modo Paisagem (Landscape)');
+                }
+            });
+        </script>
     </body>
 </html>
